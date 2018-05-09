@@ -10,8 +10,8 @@ format long;
 
 % Dimensions de l'espace
 
-X = 150;
-Y = 150;
+X = 50;
+Y = 50;
 
 % Constantes
 
@@ -26,10 +26,6 @@ beta = pulsation/c;
 
 walls = [];
 emitters = [];
-firstwaves = [];
-secondwaves = [];
-thirdwaves = [];
-fourthwaves = [];
 
 power_matrix = zeros(Y,X);
 
@@ -44,13 +40,13 @@ walls = [walls dwall uwall rwall lwall];
 
 % Émetteur(s)
 
-e1 = emitter(8,13,10,10);
+e1 = emitter(20,25,10,10);
 
 emitters = [emitters e1];
 
 % Construction de l'espace (Murs, ...)
 
-wal = wall('v',75,115,100,1);
+wal = wall('v',15,35,20,1);
 %wal2 = wall('h',6,15,4,1);
 %wal3 = wall('v',10,15,10,1);
 
@@ -63,11 +59,15 @@ for rx_x = 1:1:X %Pour tout x
         if ([rx_x,rx_y] == [e1.x,e1.y]) %On ignore le cas ou on se trouve sur l'émetteur
         else
             d = sqrt((rx_x-e1.x)^2 + (rx_y-e1.y)^2);
-            power_matrix(rx_y,rx_x) = power_matrix(rx_y,rx_x) + (abs(sqrt(60*e1.GTX*e1.PTX)*(exp(-j*beta*d))/d)^2)/(2*120*pi);
+            if(wallOnLine(e1.x,e1.y,rx_x,rx_y,walls,0) == 0)
+                power_matrix(rx_y,rx_x) = power_matrix(rx_y,rx_x) + (abs(sqrt(60*e1.GTX*e1.PTX)*(exp(-j*beta*d))/d)^2)/(2*120*pi);
+            end
             for w = walls % Pour tous les murs
                 %On incrémente la valeur de puissance POUR LES REFLEXIONS
                 %HORIZONTALE D'ORDRE 1 :
-                power_matrix(rx_y,rx_x) = power_matrix(rx_y,rx_x) + IMG_MTHD_VERTICAL_1(rx_x,rx_y,e1.x,e1.y, w, e1.GTX,e1.PTX,beta);
+                if(wallOnLine(e1.x,e1.y,rx_x,rx_y,walls,1,w) == 0)
+                    power_matrix(rx_y,rx_x) = power_matrix(rx_y,rx_x) + IMG_MTHD_VERTICAL_1(rx_x,rx_y,e1.x,e1.y, w, e1.GTX,e1.PTX,beta);
+                end
             end
         end
     end
