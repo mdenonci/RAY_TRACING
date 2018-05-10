@@ -4,6 +4,7 @@ classdef emitter
         y;
         GTX;
         PTX;
+
     end
     methods
         function obj = emitter(x,y,GTX,PTX)
@@ -11,6 +12,7 @@ classdef emitter
             obj.y = y;
             obj.GTX = GTX;
             obj.PTX = PTX;
+
         end
     end
 end

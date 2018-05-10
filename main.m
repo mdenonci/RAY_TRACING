@@ -63,20 +63,20 @@ walls = [walls wal];
 
 [power_matrix,emitterPrimeList]=calculPuissance(e1,power_matrix,X,Y,beta,walls);
 
-% % Calcul Puissance Ondes reflechies 1fois + création de listes des éméteurs de deuxieme réflexion
-% for emitterSecond = emitterPrimeList
-%    [power_matrix, emitterThirdList]=calculPuissance(emitterSecond,power_matrix,X,Y,beta,walls);
-% end
+% Calcul Puissance Ondes reflechies 1fois + création de listes des éméteurs de deuxieme réflexion
+for emitterSecond = emitterPrimeList
+   [power_matrix, emitterThirdList]=calculPuissance(emitterSecond,power_matrix,X,Y,beta,walls);
+end
 % 
 % % Calcul Puissance Ondes reflechies 2fois + création de listes des éméteurs de troisieme réflexion
 % 
 % for emitterThird = emitterThirdList
 %     [power_matrix, emitterThirdList]=calculPuissance(emitterThird,power_matrix,X,Y,beta,walls);
 % end
-
-% Calcul Puissance Ondes reflechies 3fois + création de listes des éméteurs
-% de quatrieme réflexion (ce dernier n'est pas utile)
-
+% 
+% % Calcul Puissance Ondes reflechies 3fois + création de listes des éméteurs
+% % de quatrieme réflexion (ce dernier n'est pas utile)
+% 
 % for emitterFourth = emitterThirdList
 %     [power_matrix, emitterFourthList]=calculPuissance(emitterFourth,power_matrix,X,Y,beta,walls);
 % end

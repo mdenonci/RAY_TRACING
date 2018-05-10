@@ -1,6 +1,6 @@
 function [PRX,IMX,IMY] = IMG_MTHD_VERTICAL_1(RX_X,RX_Y,TX_X,TX_Y, wall,GTX,PTX,beta)
 
-PRX = 0;
+PRX= 0;
 IMX=-1;
 IMY=-1;
 if(wall.xl >= TX_X && wall.xl >= RX_X)
