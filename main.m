@@ -45,7 +45,6 @@ walls = [walls dwall uwall rwall lwall];
 % Émetteur(s)
 
 e1 = emitter(8,13,10,10);
-
 emitters = [emitters e1];
 
 % Construction de l'espace (Murs, ...)
@@ -56,22 +55,31 @@ wal = wall('v',75,115,100,1);
 
 walls = [walls wal];
 
-%% Calculs
+%%%%%%%%%%%
+% Calculs
+%%%%%%%%%%%
 
-for rx_x = 1:1:X %Pour tout x
-    for rx_y = 1:1:Y %et pour tout y
-        if ([rx_x,rx_y] == [e1.x,e1.y]) %On ignore le cas ou on se trouve sur l'émetteur
-        else
-            d = sqrt((rx_x-e1.x)^2 + (rx_y-e1.y)^2);
-            power_matrix(rx_y,rx_x) = power_matrix(rx_y,rx_x) + (abs(sqrt(60*e1.GTX*e1.PTX)*(exp(-j*beta*d))/d)^2)/(2*120*pi);
-            for w = walls % Pour tous les murs
-                %On incrémente la valeur de puissance POUR LES REFLEXIONS
-                %HORIZONTALE D'ORDRE 1 :
-                power_matrix(rx_y,rx_x) = power_matrix(rx_y,rx_x) + IMG_MTHD_VERTICAL_1(rx_x,rx_y,e1.x,e1.y, w, e1.GTX,e1.PTX,beta);
-            end
-        end
-    end
-end
+% Calcul Puissance Ondes directes+ création de listes des éméteurs de premiere réflexion
+
+[power_matrix,emitterPrimeList]=calculPuissance(e1,power_matrix,X,Y,beta,walls);
+
+% % Calcul Puissance Ondes reflechies 1fois + création de listes des éméteurs de deuxieme réflexion
+% for emitterSecond = emitterPrimeList
+%    [power_matrix, emitterThirdList]=calculPuissance(emitterSecond,power_matrix,X,Y,beta,walls);
+% end
+% 
+% % Calcul Puissance Ondes reflechies 2fois + création de listes des éméteurs de troisieme réflexion
+% 
+% for emitterThird = emitterThirdList
+%     [power_matrix, emitterThirdList]=calculPuissance(emitterThird,power_matrix,X,Y,beta,walls);
+% end
+
+% Calcul Puissance Ondes reflechies 3fois + création de listes des éméteurs
+% de quatrieme réflexion (ce dernier n'est pas utile)
+
+% for emitterFourth = emitterThirdList
+%     [power_matrix, emitterFourthList]=calculPuissance(emitterFourth,power_matrix,X,Y,beta,walls);
+% end
 
 
 
