@@ -35,21 +35,21 @@ power_matrix = zeros(Y,X);
 
 % Définition des murs externes
 
-dwall = wall('h',0,0,X,0);
-uwall = wall('h',0,Y,X,0);
-rwall = wall('v',X,Y,Y,0);
-lwall = wall('v',0,Y,Y,0);
-
-walls = [walls dwall uwall rwall lwall];
+% dwall = wall('h',0,0,X,0,false);
+% uwall = wall('h',0,Y,X,0,false);
+% rwall = wall('v',X,Y,Y,0,false);
+% lwall = wall('v',0,Y,Y,0,false);
+% 
+% walls = [walls dwall uwall rwall lwall];
 
 % Émetteur(s)
 
-e1 = emitter(8,13,10,10);
+e1 = emitter(8,13,10,10,false);
 emitters = [emitters e1];
 
 % Construction de l'espace (Murs, ...)
 
-wal = wall('v',75,115,100,1);
+wal = wall('v',30,115,100,1,true);
 %wal2 = wall('h',6,15,4,1);
 %wal3 = wall('v',10,15,10,1);
 
@@ -62,11 +62,11 @@ walls = [walls wal];
 % Calcul Puissance Ondes directes+ création de listes des éméteurs de premiere réflexion
 
 [power_matrix,emitterPrimeList]=calculPuissance(e1,power_matrix,X,Y,beta,walls);
-
-% Calcul Puissance Ondes reflechies 1fois + création de listes des éméteurs de deuxieme réflexion
+% % Calcul Puissance Ondes reflechies 1fois + création de listes des éméteurs de deuxieme réflexion
 for emitterSecond = emitterPrimeList
    [power_matrix, emitterThirdList]=calculPuissance(emitterSecond,power_matrix,X,Y,beta,walls);
 end
+
 % 
 % % Calcul Puissance Ondes reflechies 2fois + création de listes des éméteurs de troisieme réflexion
 % 
