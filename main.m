@@ -49,11 +49,12 @@ emitters = [emitters e1];
 
 % Construction de l'espace (Murs, ...)
 
-wal = wall('v',30,115,100,1,true);
-%wal2 = wall('h',6,15,4,1);
+wal = wall('v',30,120,100,1,true);
+%wal2 = wall('h',6,30,100,1,true);
 %wal3 = wall('v',10,15,10,1);
 
 walls = [walls wal];
+%walls=[walls wal2];
 
 %%%%%%%%%%%
 % Calculs
@@ -66,7 +67,6 @@ walls = [walls wal];
 for emitterSecond = emitterPrimeList
    [power_matrix, emitterThirdList]=calculPuissance(emitterSecond,power_matrix,X,Y,beta,walls);
 end
-
 % 
 % % Calcul Puissance Ondes reflechies 2fois + création de listes des éméteurs de troisieme réflexion
 % 
