@@ -1,6 +1,6 @@
-function [power_matrix,emitterReflexPrimeList,emitterTransmPrimeList]=calculPuissance(emetteur,power_matrix,X,Y,Xi,Xs,Yi,Ys,beta,walls)
+function [power_matrix,emitterReflexPrimeList]=calculPuissance(emetteur,power_matrix,X,Y,Xi,Xs,Yi,Ys,beta,walls)
 emitterReflexPrimeList=[];
-emitterTransmPrimeList=[];
+%emitterTransmPrimeList=[];
 wallReflexList=[];
  %trouve la coordonnée de l'antenne de reflexion
  
@@ -29,16 +29,22 @@ for rx_x = Xi:1:Xs %Pour tout x
                 if(max(size(wallOnTheRoad(emetteur,rx_x,rx_y,walls)))==0)
                 else
                     wallsCrossed=wallOnTheRoad(emetteur,rx_x,rx_y,walls);
-                    wall=lastWallOnTheRoad(rx_x,rx_y,wallsCrossed);
-                    if(wallIsTheReflex(emetteur,wall))
+                    lastwall=lastWallOnTheRoad(rx_x,rx_y,wallsCrossed);
+                    if(wallIsTheReflex(emetteur,lastwall))
                         power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
                     else
-                        emitterReflexPrime=reflexion(emetteur,beta,wall);
-                        emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
-                        wallReflexList=[wallReflexList wall];
+                        if(emetteur.wall.type==lastwall.type)
+                            if (wallNotInTheList(lastwall,wallReflexList))
+                                emitterReflexPrime=reflexion(emetteur,beta,lastwall);
+                                emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
+                                wallReflexList=[wallReflexList lastwall];
+                            end
+
+                        end
                     end
                 end
             end
+
 %                     if (wallNotInTheList(wall,wallReflexList))
 %                         if(emetteur.wall.xl==wall.xl && emetteur.wall.yu==wall.yu)
 %                         else
