@@ -1,9 +1,9 @@
-function [power_matrix,emitterReflexPrimeList]=calculPuissance(emetteur,power_matrix,X,Y,beta,walls)
+function [power_matrix,emitterReflexPrimeList]=calculPuissance(emetteur,power_matrix,X,Y,Xi,Xs,Yi,Ys,beta,walls)
 emitterReflexPrimeList=[];
 wallReflexList=[];
  %trouve la coordonnée de l'antenne de reflexion
-for rx_x = 1:1:X %Pour tout x
-    for rx_y = 1:1:Y %et pour tout y
+for rx_x = Xi:1:Xs %Pour tout x // MODIFICATION
+    for rx_y = Yi:1:Ys %et pour tout y // MODIFICATION
         if ([rx_x,rx_y] == [emetteur.x,emetteur.y]) %On ignore le cas ou on se trouve sur l'émetteur   
         else
             if(emetteur.reflex==0)

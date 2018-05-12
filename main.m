@@ -13,6 +13,17 @@ format long;
 X = 150;
 Y = 150;
 
+% Positions du nouveau carré shifté afin d'avoir une marge
+Xinf = X;
+Xsup = 2*X;
+Yinf = Y;
+Ysup = 2*Y;
+
+% Nouvelles limites
+
+X = 3*X;
+Y = 3*Y;
+
 % Constantes
 
 eps_0 = (1e-9/(36*pi));
@@ -62,25 +73,29 @@ walls=[walls wal3];
 % Calculs
 %%%%%%%%%%%
 
+[walls,emitters] = shiftElements(walls,emitters,Xinf,Yinf);
+
+e1 = emitters(1);
+
 % Calcul Puissance Ondes directes+ création de listes des éméteurs de premiere réflexion
 
-[power_matrix,emitterSecondList]=calculPuissance(e1,power_matrix,X,Y,beta,walls);
+[power_matrix,emitterSecondList]=calculPuissance(e1,power_matrix,X,Y,Xinf,Xsup,Yinf,Ysup,beta,walls);
 % % Calcul Puissance Ondes reflechies 1fois + création de listes des éméteurs de deuxieme réflexion
 for emitterSecond = emitterSecondList
-   [power_matrix, emitterThirdList]=calculPuissance(emitterSecond,power_matrix,X,Y,beta,walls);
+   [power_matrix, emitterThirdList]=calculPuissance(emitterSecond,power_matrix,X,Y,Xinf,Xsup,Yinf,Ysup,beta,walls);
 end
 % 
 % % Calcul Puissance Ondes reflechies 2fois + création de listes des éméteurs de troisieme réflexion
 % 
 for emitterThird = emitterThirdList
-    [power_matrix, emitterFourthList]=calculPuissance(emitterThird,power_matrix,X,Y,beta,walls);
+    [power_matrix, emitterFourthList]=calculPuissance(emitterThird,power_matrix,X,Y,Xinf,Xsup,Yinf,Ysup,beta,walls);
 end
 % 
 % % Calcul Puissance Ondes reflechies 3fois + création de listes des éméteurs
 % % de quatrieme réflexion (ce dernier n'est pas utile)
 % 
 % for emitterFourth = emitterFourthList
-%     [power_matrix, emitterFourthList]=calculPuissance(emitterFourth,power_matrix,X,Y,beta,walls);
+%     [power_matrix, emitterFourthList]=calculPuissance(emitterFourth,power_matrix,X,Y,Xinf,Xsup,Yinf,Ysup,beta,walls);
 % end
 
 
@@ -370,5 +385,5 @@ for wl = walls
     hold on;
 end
 
-xlim([1 X]);
-ylim([1 Y]);
+xlim([Xinf Xsup]);
+ylim([Yinf Ysup]);
