@@ -12,11 +12,11 @@ for rx_x = Xi:1:Xs %Pour tout x
                 if(max(size(wallOnTheRoad(emetteur,rx_x,rx_y,walls)))==0)
                     power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
                 else
-                    wall=firstWallOnTheRoad(emetteur,wallOnTheRoad(emetteur,rx_x,rx_y,walls));
-                    if (wallNotInTheList(wall,wallReflexList))
-                        emitterReflexPrime=reflexion(emetteur,beta,wall);
+                    wallDir=firstWallOnTheRoad(emetteur,wallOnTheRoad(emetteur,rx_x,rx_y,walls));
+                    if (wallNotInTheList(wallDir,wallReflexList))
+                        emitterReflexPrime=reflexion(emetteur,beta,wallDir);
                         emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
-                        wallReflexList=[wallReflexList wall];
+                        wallReflexList=[wallReflexList wallDir];
                     end
 %                     emitterTransmPrime = findTransmissionAntenna(emetteur,rx_x,rx_y,wall);
 %                     if emitterNotInTheList(emitterTransmPrime,emitterTransmPrimeList)
@@ -26,21 +26,20 @@ for rx_x = Xi:1:Xs %Pour tout x
             end
                 
             if(emetteur.reflex==1)
-                if(max(size(wallOnTheRoad(emetteur,rx_x,rx_y,walls)))==0)
+                if(wallNotInTheList(emetteur.wall,wallOnTheRoad(emetteur,rx_x,rx_y,walls)))
                 else
                     wallsCrossed=wallOnTheRoad(emetteur,rx_x,rx_y,walls);
                     lastwall=lastWallOnTheRoad(rx_x,rx_y,wallsCrossed);
                     if(wallIsTheReflex(emetteur,lastwall))
                         power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
                     else
-                        if(emetteur.wall.type==lastwall.type)
-                            if (wallNotInTheList(lastwall,wallReflexList))
-                                emitterReflexPrime=reflexion(emetteur,beta,lastwall);
-                                emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
-                                wallReflexList=[wallReflexList lastwall];
-                            end
-
+                        if (wallNotInTheList(lastwall,wallReflexList))
+                            emitterReflexPrime=reflexion(emetteur,beta,lastwall);
+                            emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
+                            wallReflexList=[wallReflexList lastwall];
                         end
+                        
+
                     end
                 end
             end

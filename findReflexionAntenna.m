@@ -1,11 +1,10 @@
 function [IMX,IMY,wallIntersectionX,wallIntersectionY,wall] = findReflexionAntenna(TX_X,TX_Y, wall)
-
 IMX=-1;
 IMY=-1;
 wallIntersectionX=-1;
 wallIntersectionY=-1;
 if(wall.type=='v')
-    if(wall.xl > TX_X)
+    if(wall.xl >= TX_X)
         distance = wall.xl - TX_X;
         IMX = wall.xl + distance;
         IMY = TX_Y;
@@ -30,7 +29,7 @@ if(wall.type=='h')
         wallIntersectionY=wall.yd;
     end
 
-    if(wall.yu >= TX_Y)
+    if(wall.yu < TX_Y)
         distance = wall.yu - TX_Y;
         IMX = TX_X;
         IMY = wall.yu + distance;
