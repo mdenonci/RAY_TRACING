@@ -4,7 +4,7 @@ if (IMX>0)
     if(IMY>0)
         if(emetteur.reflex && emetteur.oldX==IMX && emetteur.oldY==IMY)
         else
-            emitterPrime= emitter(IMX,IMY,emetteur.GTX,emetteur.PTX,true);
+            emitterPrime= emitter(IMX,IMY,emetteur.GTX,emetteur.PTX,true,false);
             emitterPrime.wallIntersectionX=interx;
             emitterPrime.wallIntersectionY=intery;
             emitterPrime.oldX=emetteur.x;
