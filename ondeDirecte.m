@@ -5,37 +5,31 @@ function power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta)
         if(abs(emetteur.x-emetteur.oldX)==0)
             dist=emetteur.y-emetteur.oldY;
             if(dist>0 && intery>rx_y)
-                d = sqrt((rx_x-emetteur.x)^2 + (rx_y-emetteur.y)^2);
-                power_matrix(rx_y,rx_x) = power_matrix(rx_y,rx_x) + (abs(sqrt(60*emetteur.GTX*emetteur.PTX)*(exp(-j*beta*d))/d)^2)/(2*120*pi);
+                puissanceEquation(emetteur,power_matrix,rx_x,rx_y,beta);
             end
             if(dist<0 && intery<rx_y)
-                d = sqrt((rx_x-emetteur.x)^2 + (rx_y-emetteur.y)^2);
-                power_matrix(rx_y,rx_x) = power_matrix(rx_y,rx_x) + (abs(sqrt(60*emetteur.GTX*emetteur.PTX)*(exp(-j*beta*d))/d)^2)/(2*120*pi);
+                puissanceEquation(emetteur,power_matrix,rx_x,rx_y,beta);
             end
         end
         if(abs(emetteur.y-emetteur.oldY)==0)
             dist=emetteur.x-emetteur.oldX;
             dist=dist/2;
             if(dist>0 && interx>rx_x)
-                d = sqrt((rx_x-emetteur.x)^2 + (rx_y-emetteur.y)^2);
-                power_matrix(rx_y,rx_x) = power_matrix(rx_y,rx_x) + (abs(sqrt(60*emetteur.GTX*emetteur.PTX)*(exp(-j*beta*d))/d)^2)/(2*120*pi);
+                power_matrix=puissanceEquation(emetteur,power_matrix,rx_x,rx_y,beta);
             end
             if(dist<0 && interx<rx_x)
-                d = sqrt((rx_x-emetteur.x)^2 + (rx_y-emetteur.y)^2);
-                power_matrix(rx_y,rx_x) = power_matrix(rx_y,rx_x) + (abs(sqrt(60*emetteur.GTX*emetteur.PTX)*(exp(-j*beta*d))/d)^2)/(2*120*pi);
+                power_matrix=puissanceEquation(emetteur,power_matrix,rx_x,rx_y,beta);
             end
         end
     end
     
     if(emetteur.reflex==false && emetteur.transmis==false)
-    d = sqrt((rx_x-emetteur.x)^2 + (rx_y-emetteur.y)^2);
-    power_matrix(rx_y,rx_x) = power_matrix(rx_y,rx_x) + (abs(sqrt(60*emetteur.GTX*emetteur.PTX)*(exp(-j*beta*d))/d)^2)/(2*120*pi);
+        power_matrix=puissanceEquation(emetteur,power_matrix,rx_x,rx_y,beta);
     end
     
     if(emetteur.transmis == 1)
         if (pointIsAligned(emetteur,rx_x,rx_y))
-            d = sqrt((rx_x-emetteur.x)^2 + (rx_y-emetteur.y)^2);
-            power_matrix(rx_y,rx_x) = power_matrix(rx_y,rx_x) + (abs(sqrt(60*emetteur.GTX*emetteur.PTX)*(exp(-j*beta*d))/d)^2)/(2*120*pi);
+            power_matrix=puissanceEquation(emetteur,power_matrix,rx_x,rx_y,beta);
         end
     end
 end
