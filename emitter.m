@@ -22,7 +22,7 @@ classdef emitter
             obj.reflex=reflex;
             obj.wallIntersectionX=-1;
             obj.wallIntersectionY=-1;
-            obj.wall
+            obj.wall;
             
         end
     end

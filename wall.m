@@ -6,6 +6,7 @@ classdef wall
         yd;
         e;
         l;
+        dist;
         type;
         reflex;
     end
@@ -16,6 +17,7 @@ classdef wall
             obj.yu = yu;
             obj.l = l;
             obj.e = e;
+            obj.dist=10000;
             obj.reflex=reflex;
             if (type == 'v')
                 obj.xr = xl+e;
