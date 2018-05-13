@@ -46,10 +46,10 @@ power_matrix = zeros(Y,X);
 
 % Définition des murs externes
 
-% dwall = wall('h',0,0,X,0,true);
-% uwall = wall('h',0,Y,X,0,true);
-% rwall = wall('v',X,Y,Y,0,true);
-% lwall = wall('v',0,Y,Y,0,true);
+% dwall = wall('h',0,0,X,0,true,'brique');
+% uwall = wall('h',0,Y,X,0,true,'brique');
+% rwall = wall('v',X,Y,Y,0,true,'brique');
+% lwall = wall('v',0,Y,Y,0,true,'brique');
 % 
 % walls = [walls dwall uwall rwall lwall];
 
@@ -60,16 +60,21 @@ emitters = [emitters e1];
 
 % Construction de l'espace (Murs, ...)
 
-wal = wall('v',14,10,4,0,true);
+% Le dernier argument est pour spécifier le materiaux du mur 
+% brique=0
+% beton=1
+% cloison=2
+
+wal = wall('v',14,10,4,0,true,0);
 walls = [walls wal];
 
-wal4 = wall('v',9,10,4,0,true);
-walls=[walls wal4];
+%wal4 = wall('v',9,10,4,0,true,0);
+%walls=[walls wal4];
 % 
-% wal2 = wall('h',11,10,4,0,true);
+% wal2 = wall('h',11,10,4,0,true,0);
 % walls=[walls wal2];
 % 
-% wal3 = wall('h',11,13,4,0,true);
+% wal3 = wall('h',11,13,4,0,true,à);
 % walls=[walls wal3];
 
 

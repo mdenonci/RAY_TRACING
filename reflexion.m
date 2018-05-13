@@ -12,6 +12,7 @@ if (IMX>0)
             emitterPrime.oldY=emetteur.y;
             emitterPrime.reflex=1;
             emitterPrime.wall=wall;
+            emitterPrime.transmis=0;
         end
     end
 end

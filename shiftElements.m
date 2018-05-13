@@ -4,7 +4,7 @@ NEWWALLS = [];
 NEWEMITTERS = [];
 
 for wallOld = walls_list
-    wallCopy = wall(wallOld.type,wallOld.xl+shiftX,wallOld.yu+shiftY,wallOld.l,wallOld.e,wallOld.reflex);
+    wallCopy = wall(wallOld.type,wallOld.xl+shiftX,wallOld.yu+shiftY,wallOld.l,wallOld.e,wallOld.reflex,wallOld.materiaux);
     NEWWALLS = [NEWWALLS wallCopy];
 end
 

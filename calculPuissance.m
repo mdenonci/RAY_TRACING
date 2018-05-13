@@ -10,7 +10,7 @@ for rx_x = Xi:1:Xs %Pour tout x
         else
             if(emetteur.reflex==0 && emetteur.transmis == 0)
                 if(max(size(wallOnTheRoad(emetteur,rx_x,rx_y,walls)))==0)
-                    %power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
+                    power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
                 else
                     wallDir=firstWallOnTheRoad(emetteur,wallOnTheRoad(emetteur,rx_x,rx_y,walls));
                     if (wallNotInTheList(wallDir,wallReflexList))
@@ -42,6 +42,7 @@ for rx_x = Xi:1:Xs %Pour tout x
 %                     [isTR,newTXX,newTXY,angleOfTransmission,newGTX,newPTX] = Snell_Descartes(wallDir,theta_i,reflexionPoint(1),reflexionPoint(2));
 %                     if(isTR==1)
 %                         emitterTransmPrime = emitter(newTXX,newTXY,10*newGTX,10*newPTX,false,emetteur.transmis+1);
+%                         emitterTransmPrime.reflex=0;
 %                         emitterTransmPrime.angleOfEmission = angleOfTransmission;
 %                         if emitterNotInTheList(emitterTransmPrime,emitterTransmPrimeList)
 %                             emitterTransmPrimeList = [emitterTransmPrimeList emitterTransmPrime];
