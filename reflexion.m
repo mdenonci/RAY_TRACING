@@ -3,6 +3,7 @@ function emitterPrime= reflexion(emetteur,beta,wall)
 if (IMX>0)
     if(IMY>0)
         if(emetteur.reflex && emetteur.oldX==IMX && emetteur.oldY==IMY)
+            emitterPrime=emitter(-1,-1,emetteur.GTX,emetteur.PTX,true,false);
         else
             emitterPrime= emitter(IMX,IMY,emetteur.GTX,emetteur.PTX,true,false);
             emitterPrime.wallIntersectionX=interx;

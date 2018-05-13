@@ -10,7 +10,7 @@ for rx_x = Xi:1:Xs %Pour tout x
         else
             if(emetteur.reflex==0 && emetteur.transmis == 0)
                 if(max(size(wallOnTheRoad(emetteur,rx_x,rx_y,walls)))==0)
-                    power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
+                    %power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
                 else
                     wallDir=firstWallOnTheRoad(emetteur,wallOnTheRoad(emetteur,rx_x,rx_y,walls));
                     if (wallNotInTheList(wallDir,wallReflexList))
@@ -38,62 +38,60 @@ for rx_x = Xi:1:Xs %Pour tout x
                     % >> Corriger les problèmes potentiels d'angles
                     % >> adapter la méthode A TOUS LES MURS
                     
-                    [reflexionPoint, theta_i] = findReflexionPoint(emetteur,wallDir,rx_x,rx_y);
-                    [isTR,newTXX,newTXY,angleOfTransmission,newGTX,newPTX] = Snell_Descartes(wallDir,theta_i,reflexionPoint(1),reflexionPoint(2));
-                    if(isTR==1)
-                        emitterTransmPrime = emitter(newTXX,newTXY,10*newGTX,10*newPTX,false,emetteur.transmis+1)
-                        emitterTransmPrime.angleOfEmission = angleOfTransmission;
-                        if emitterNotInTheList(emitterTransmPrime,emitterTransmPrimeList)
-                            emitterTransmPrimeList = [emitterTransmPrimeList emitterTransmPrime];
-                        end
-                    end
-                end
-            end
-                
-            if(emetteur.reflex==1)
-                if(wallNotInTheList(emetteur.wall,wallOnTheRoad(emetteur,rx_x,rx_y,walls)))
-                else
-                    wallsCrossed=wallOnTheRoad(emetteur,rx_x,rx_y,walls);
-                    goodwall=theWallThatReflex(wallsCrossed,emetteur.wall);
-                    if(wallIsTheReflex(emetteur,goodwall))
-                        power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
-                    else
-                        if (wallNotInTheList(goodwall,wallReflexList))
-                            emitterReflexPrime=reflexion(emetteur,beta,goodwall);
-                            emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
-                            wallReflexList=[wallReflexList goodwall];
-                        end
-                        
-
-                    end
-                end
-            end
-
-%                     if (wallNotInTheList(wall,wallReflexList))
-%                         if(emetteur.wall.xl==wall.xl && emetteur.wall.yu==wall.yu)
-%                         else
-%                             emitterReflexPrime=reflexion(emetteur,beta,wall);
-%                             emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
-%                             wallReflexList=[wallReflexList wall];
+%                     [reflexionPoint, theta_i] = findReflexionPoint(emetteur,wallDir,rx_x,rx_y);
+%                     [isTR,newTXX,newTXY,angleOfTransmission,newGTX,newPTX] = Snell_Descartes(wallDir,theta_i,reflexionPoint(1),reflexionPoint(2));
+%                     if(isTR==1)
+%                         emitterTransmPrime = emitter(newTXX,newTXY,10*newGTX,10*newPTX,false,emetteur.transmis+1);
+%                         emitterTransmPrime.angleOfEmission = angleOfTransmission;
+%                         if emitterNotInTheList(emitterTransmPrime,emitterTransmPrimeList)
+%                             emitterTransmPrimeList = [emitterTransmPrimeList emitterTransmPrime];
 %                         end
 %                     end
-%                 end
-%                 
-%                 
-%             end
-
-            if(emetteur.transmis==1)
-                if(max(size(wallOnTheRoad(emetteur,rx_x,rx_y,walls)))==0)
-                    power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
+                end
+            end
+            
+            if(emetteur.reflex==1)
+                wallsCrossed=wallOnTheRoad(emetteur,rx_x,rx_y,walls);
+                numberOfCrossedWalls=max(size(wallsCrossed));
+                if(wallNotInTheList(emetteur.wall,wallsCrossed))
                 else
-                    wall=firstWallOnTheRoad(emetteur,wallOnTheRoad(emetteur,rx_x,rx_y,walls));
-                    if (wallNotInTheList(wall,wallReflexList))
-                        emitterReflexPrime=reflexion(emetteur,beta,wall);
-                        emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
-                        wallReflexList=[wallReflexList wall];
+                    goodwall=theWallThatReflex(wallsCrossed,emetteur.wall);
+                    lastWall=lastWallOnTheRoad(rx_x,rx_y,wallsCrossed);
+                    if(wallIsTheReflex(emetteur,lastWall))
+                        power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
+                    else
+                         if (wallNotInTheList(goodwall,wallReflexList))
+                            emitterReflexPrime=reflexion(emetteur,beta,goodwall);
+                            if(emitterReflexPrime.x== -1 && emitterReflexPrime.x== -1)
+                            else
+                                emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
+                                wallReflexList=[wallReflexList goodwall];
+                            end
+                         end
+                        
+                        
                     end
                 end
             end
+
+            
+
+                
+                
+        
+
+%             if(emetteur.transmis==1)
+%                 if(max(size(wallOnTheRoad(emetteur,rx_x,rx_y,walls)))==0)
+%                     power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
+%                 else
+%                     wall=firstWallOnTheRoad(emetteur,wallOnTheRoad(emetteur,rx_x,rx_y,walls));
+%                     if (wallNotInTheList(wall,wallReflexList))
+%                         emitterReflexPrime=reflexion(emetteur,beta,wall);
+%                         emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
+%                         wallReflexList=[wallReflexList wall];
+%                     end
+%                 end
+%             end
         end
     end
 end
