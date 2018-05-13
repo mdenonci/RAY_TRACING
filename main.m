@@ -60,14 +60,14 @@ emitters = [emitters e1];
 
 % Construction de l'espace (Murs, ...)
 
-% wal = wall('v',8,20,10,0,true);
-% walls = [walls wal];
+wal = wall('v',8,20,10,0,true);
+walls = [walls wal];
 
 wal4 = wall('v',12,20,10,0,true);
 walls=[walls wal4];
 
-% wal2 = wall('h',8,16,10,0,true);
-% walls=[walls wal2];
+wal2 = wall('h',8,16,10,0,true);
+walls=[walls wal2];
 
 wal3 = wall('h',8,14,10,0,true);
 walls=[walls wal3];

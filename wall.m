@@ -6,6 +6,8 @@ classdef wall
         yd;
         e;
         l;
+        rayInterX;
+        rayInterY;
         dist;
         type;
         reflex;
@@ -17,6 +19,8 @@ classdef wall
             obj.yu = yu;
             obj.l = l;
             obj.e = e;
+            obj.rayInterX=xl;
+            obj.rayInterY=yu;
             obj.dist=10000;
             obj.reflex=reflex;
             if (type == 'v')

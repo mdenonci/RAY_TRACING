@@ -29,14 +29,14 @@ for rx_x = Xi:1:Xs %Pour tout x
                 if(wallNotInTheList(emetteur.wall,wallOnTheRoad(emetteur,rx_x,rx_y,walls)))
                 else
                     wallsCrossed=wallOnTheRoad(emetteur,rx_x,rx_y,walls);
-                    lastwall=lastWallOnTheRoad(rx_x,rx_y,wallsCrossed);
-                    if(wallIsTheReflex(emetteur,lastwall))
+                    goodwall=theWallThatReflex(wallsCrossed,emetteur.wall);
+                    if(wallIsTheReflex(emetteur,goodwall))
                         power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
                     else
-                        if (wallNotInTheList(lastwall,wallReflexList))
-                            emitterReflexPrime=reflexion(emetteur,beta,lastwall);
+                        if (wallNotInTheList(goodwall,wallReflexList))
+                            emitterReflexPrime=reflexion(emetteur,beta,goodwall);
                             emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
-                            wallReflexList=[wallReflexList lastwall];
+                            wallReflexList=[wallReflexList goodwall];
                         end
                         
 

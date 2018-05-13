@@ -16,8 +16,8 @@ for w = walls
             for y=yBegin:yEnd
                 if(yCorr==y)
                     w.dist=sqrt(((y-TX_Y)^2)+((xw-TX_X)^2));
-                    w.rayInterX=xw;
-                    w.rayInterY=y;
+                    w.rayInterX=
+                    w.rayInterY=
                     wallsOnTheRoad=[wallsOnTheRoad w];
                 end
             end
@@ -35,8 +35,6 @@ for w = walls
             xCorr=round((vectDir*yw)+b);
             for x=xBegin:xEnd
                 if(xCorr==x)
-                    w.rayInterX=x;
-                    w.rayInterY=yw;
                     w.dist=sqrt(((yw-TX_Y)^2)+((x-TX_X)^2));
                     wallsOnTheRoad=[wallsOnTheRoad w];
                     
