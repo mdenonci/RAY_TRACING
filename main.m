@@ -55,7 +55,7 @@ power_matrix = zeros(Y,X);
 
 % Émetteur(s)
 
-e1 = emitter(12,9,8,8,false,false);
+e1 = emitter(18,12,10,10,0,0);
 emitters = [emitters e1];
 
 % Construction de l'espace (Murs, ...)
@@ -65,16 +65,16 @@ emitters = [emitters e1];
 % beton=1
 % cloison=2
 
-wal = wall('v',14,10,4,0,true,0);
+wal = wall('v',10,14,4,0,true,0);
 walls = [walls wal];
 
 %wal4 = wall('v',9,10,4,0,true,0);
 %walls=[walls wal4];
 % 
-% wal2 = wall('h',11,10,4,0,true,0);
+% wal2 = wall('h',11,16,4,0,true,0);
 % walls=[walls wal2];
 % 
-% wal3 = wall('h',11,13,4,0,true,à);
+% wal3 = wall('h',11,13,4,0,true,0);
 % walls=[walls wal3];
 
 

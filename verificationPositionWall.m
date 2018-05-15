@@ -12,7 +12,7 @@ if(wall.type=='v')
         end
     end
     if(TX_Y>wall.yd)
-        if(pointIsOverTheLine(TX_X,TX_Y,emetteur.wall.xl,yEnd,rx_x,rx_y))
+        if(pointIsUnderTheLine(TX_X,TX_Y,emetteur.wall.xl,yEnd,rx_x,rx_y))
             boolean=true;
         end
     end
@@ -29,7 +29,7 @@ if(wall.type=='h')
         end
     end
     if(TX_X>wall.xr)
-        if(pointIsOverTheLine(TX_X,TX_Y,xEnd,emetteur.wall.yd,rx_x,rx_y))
+        if(pointIsUnderTheLine(TX_X,TX_Y,xEnd,emetteur.wall.yd,rx_x,rx_y))
             boolean=true;
         end
     end

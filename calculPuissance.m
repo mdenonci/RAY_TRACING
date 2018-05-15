@@ -1,22 +1,30 @@
 function [power_matrix,emitterReflexPrimeList,emitterTransmPrimeList]=calculPuissance(emetteur,power_matrix,X,Y,Xi,Xs,Yi,Ys,beta,walls)
 emitterReflexPrimeList=[];
 emitterTransmPrimeList=[];
-wallReflexList=[];
+angleReflexList=[];
  %trouve la coordonnée de l'antenne de reflexion
  
 for rx_x = Xi:1:Xs %Pour tout x
     for rx_y = Yi:1:Ys %et pour tout y
         if ([rx_x,rx_y] == [emetteur.x,emetteur.y]) %On ignore le cas ou on se trouve sur l'émetteur   
         else
+            angleEmission=calculAngleEmission(emetteur,rx_x,rx_y);
             if(emetteur.reflex==0 && emetteur.transmis == 0)
                 if(max(size(wallOnTheRoad(emetteur,rx_x,rx_y,walls)))==0)
-                    power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
+                    %power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
                 else
                     wallDir=firstWallOnTheRoad(emetteur,wallOnTheRoad(emetteur,rx_x,rx_y,walls));
-                    if (wallNotInTheList(wallDir,wallReflexList))
-                        emitterReflexPrime=reflexion(emetteur,beta,wallDir);
+                    angleEmission=calculAngleEmission(emetteur,rx_x,rx_y);
+                    emetteur.CurrentAngleOfEmission=angleEmission;
+                    emetteur.angleOfEmissionOriginal=angleEmission;
+                    if(angleNotInTheList(angleEmission,angleReflexList))
+                        [refPoint,theta] = findReflexionPoint(emetteur,wallDir,rx_x,rx_y);
+                        [isTR,newTXX,newTXY,angleOfTransmission,newGTX,newPTX] = Snell_Descartes(wallDir,theta,refPoint(1),refPoint(2));
+                        [coefficientReflexion,coefficientTransmission]=calculCoefficients(theta,angleOfTransmission,wallDir,beta);
+                        emitterReflexPrime=reflexion(emetteur,beta,wallDir,refPoint,abs(coefficientReflexion));
                         emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
-                        wallReflexList=[wallReflexList wallDir];
+                        angleReflexList=[angleReflexList angleEmission];
+                    end
                         
                         
                     end
@@ -51,7 +59,7 @@ for rx_x = Xi:1:Xs %Pour tout x
                 end
             end
             
-            if(emetteur.reflex==1)
+            if(emetteur.reflex>0||emetteur.transmis>0)
                 wallsCrossed=wallOnTheRoad(emetteur,rx_x,rx_y,walls);
                 numberOfCrossedWalls=max(size(wallsCrossed));
                 if(wallNotInTheList(emetteur.wall,wallsCrossed))
@@ -61,15 +69,17 @@ for rx_x = Xi:1:Xs %Pour tout x
                     if(wallIsTheReflex(emetteur,lastWall))
                         power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
                     else
-                         if (wallNotInTheList(goodwall,wallReflexList))
-                            emitterReflexPrime=reflexion(emetteur,beta,goodwall);
-                            if(emitterReflexPrime.x== -1 && emitterReflexPrime.x== -1)
-                            else
-                                emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
-                                wallReflexList=[wallReflexList goodwall];
-                            end
-                         end
-                        
+                    angleEmission=calculAngleEmission(emetteur,rx_x,rx_y);
+                    emetteur.CurrentAngleOfEmission=angleEmission;
+                        if(angleNotInTheList(angleEmission,angleReflexList))
+                            [refPoint,theta] = findReflexionPoint(emetteur,wallDir,rx_x,rx_y);
+                            [isTR,newTXX,newTXY,angleOfTransmission,newGTX,newPTX] = Snell_Descartes(wallDir,theta,refPoint(1),refPoint(2));
+                            [coefficientReflexion,coefficientTransmission]=calculCoefficients(theta,angleOfTransmission,wallDir,beta);
+                            emitterReflexPrime=reflexion(emetteur,beta,wallDir,refPoint,abs(coefficientReflexion));
+                            emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
+                            angleReflexList=[angleReflexList angleEmission];
+                        end
+                    
                         
                     end
                 end
@@ -81,18 +91,7 @@ for rx_x = Xi:1:Xs %Pour tout x
                 
         
 
-%             if(emetteur.transmis==1)
-%                 if(max(size(wallOnTheRoad(emetteur,rx_x,rx_y,walls)))==0)
-%                     power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
-%                 else
-%                     wall=firstWallOnTheRoad(emetteur,wallOnTheRoad(emetteur,rx_x,rx_y,walls));
-%                     if (wallNotInTheList(wall,wallReflexList))
-%                         emitterReflexPrime=reflexion(emetteur,beta,wall);
-%                         emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
-%                         wallReflexList=[wallReflexList wall];
-%                     end
-%                 end
-%             end
+
         end
     end
 end
