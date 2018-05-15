@@ -9,6 +9,6 @@ for wallOld = walls_list
 end
 
 for emitterOld = emitter_list
-    emitterCopy = emitter(emitterOld.x+shiftX,emitterOld.y+shiftY,emitterOld.GTX,emitterOld.PTX,emitterOld.reflex,emitterOld.transmis);
+    emitterCopy = emitter(emitterOld.x+shiftX,emitterOld.y+shiftY,emitterOld.GTX,emitterOld.PTX,emitterOld.reflex,emitterOld.transmis,emitterOld.coefficients);
     NEWEMITTERS = [NEWEMITTERS emitterCopy];
 end

@@ -15,23 +15,25 @@ classdef emitter
         CurrentAngleOfEmission;
         angleOfEmission;
         coefficients;
+        lastReflex;
+        lastTransmis;
         x1;
         x2;
         x3;
-        x4
+        x4;
         y1;
         y2;
         y3;
         y4;
     end
     methods
-        function obj = emitter(x,y,GTX,PTX,reflex,transmis)
+        function obj = emitter(x,y,GTX,PTX,reflex,transmis,coefficients)
             obj.x = x;
             obj.y = y;
             obj.oldX=x;
             obj.oldY=y;
             obj.x1;
-            obj.y1
+            obj.y1;
             obj.x2;
             obj.y2;
             obj.x3;
@@ -48,7 +50,9 @@ classdef emitter
             obj.angleOfEmissionOriginal;
             obj.CurrentAngleOfEmission;
             obj.angleOfEmission;
-            obj.coefficients
+            obj.coefficients=coefficients;
+            obj.lastReflex=0;
+            obj.lastTransmis=0;
         end
     end
 end

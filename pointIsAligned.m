@@ -1,11 +1,9 @@
-function boolean=pointIsAligned(emitter,rx,ry)
+function boolean=pointIsAligned(emetteur,rx,ry,erreur)
 
 boolean=false;
-
-if(rx > emitter.x)
-    theta = atand((abs(ry-emitter.y))/(abs(emitter.x-rx)));
-
-    if(theta <= emitter.CurrentAngleOfEmission+0.5 & theta >= emitter.CurrentAngleOfEmission-0.5)
-        boolean=true;
-    end
+angleEmission=emetteur.CurrentAngleOfEmission;
+anglepouratteindrelepoint=calculAngleEmission(emetteur,rx,ry);
+anglepouratteindrelepoint=anglepouratteindrelepoint;
+if(anglepouratteindrelepoint<angleEmission+erreur && anglepouratteindrelepoint>angleEmission-erreur)
+    boolean=true;
 end

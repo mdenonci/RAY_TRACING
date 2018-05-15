@@ -55,7 +55,7 @@ power_matrix = zeros(Y,X);
 
 % Émetteur(s)
 
-e1 = emitter(18,12,10,10,0,0);
+e1 = emitter(7,12,10,10,0,0,1);
 emitters = [emitters e1];
 
 % Construction de l'espace (Murs, ...)
@@ -65,11 +65,11 @@ emitters = [emitters e1];
 % beton=1
 % cloison=2
 
-wal = wall('v',10,14,4,0,true,0);
+wal = wall('v',17,16,10,0,true,0);
 walls = [walls wal];
 
-%wal4 = wall('v',9,10,4,0,true,0);
-%walls=[walls wal4];
+wal4 = wall('v',21,15,4,0,true,0);
+walls=[walls wal4];
 % 
 % wal2 = wall('h',11,16,4,0,true,0);
 % walls=[walls wal2];
@@ -101,8 +101,8 @@ for emitterSecond = [emitterSecondList]
    [power_matrix, emitterThirdList,trThirdList]=calculPuissance(emitterSecond,power_matrix,X,Y,Xinf,Xsup,Yinf,Ysup,beta,walls);
    emitterThirdListList=[emitterThirdListList emitterThirdList];
 end
-% 
-% % Calcul Puissance Ondes reflechies 2fois + création de listes des éméteurs de troisieme réflexion
+% % 
+% % % Calcul Puissance Ondes reflechies 2fois + création de listes des éméteurs de troisieme réflexion
 % 
 emitterFourthListList=[];
 for emitterThird = [emitterThirdListList]
@@ -114,10 +114,10 @@ end
 % % Calcul Puissance Ondes reflechies 3fois + création de listes des éméteurs
 % % de quatrieme réflexion (ce dernier n'est pas utile)
 
-for emitterFourth = emitterFourthListList
-    [power_matrix, emitterFifthList]=calculPuissance(emitterFourth,power_matrix,X,Y,Xinf,Xsup,Yinf,Ysup,beta,walls);
-end
-
+% for emitterFourth = emitterFourthListList
+%     [power_matrix, emitterFifthList]=calculPuissance(emitterFourth,power_matrix,X,Y,Xinf,Xsup,Yinf,Ysup,beta,walls);
+% end
+% 
 
 % % Calcul Puissance Ondes directes+ création de listes des éméteurs de premiere réflexion
 % 

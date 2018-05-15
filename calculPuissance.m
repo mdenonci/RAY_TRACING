@@ -8,7 +8,6 @@ for rx_x = Xi:1:Xs %Pour tout x
     for rx_y = Yi:1:Ys %et pour tout y
         if ([rx_x,rx_y] == [emetteur.x,emetteur.y]) %On ignore le cas ou on se trouve sur l'émetteur   
         else
-            angleEmission=calculAngleEmission(emetteur,rx_x,rx_y);
             if(emetteur.reflex==0 && emetteur.transmis == 0)
                 if(max(size(wallOnTheRoad(emetteur,rx_x,rx_y,walls)))==0)
                     %power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
@@ -59,9 +58,10 @@ for rx_x = Xi:1:Xs %Pour tout x
                 end
             end
             
-            if(emetteur.reflex>0||emetteur.transmis>0)
+            if(emetteur.lastReflex==1)
                 wallsCrossed=wallOnTheRoad(emetteur,rx_x,rx_y,walls);
                 numberOfCrossedWalls=max(size(wallsCrossed));
+                
                 if(wallNotInTheList(emetteur.wall,wallsCrossed))
                 else
                     goodwall=theWallThatReflex(wallsCrossed,emetteur.wall);
@@ -72,10 +72,10 @@ for rx_x = Xi:1:Xs %Pour tout x
                     angleEmission=calculAngleEmission(emetteur,rx_x,rx_y);
                     emetteur.CurrentAngleOfEmission=angleEmission;
                         if(angleNotInTheList(angleEmission,angleReflexList))
-                            [refPoint,theta] = findReflexionPoint(emetteur,wallDir,rx_x,rx_y);
-                            [isTR,newTXX,newTXY,angleOfTransmission,newGTX,newPTX] = Snell_Descartes(wallDir,theta,refPoint(1),refPoint(2));
-                            [coefficientReflexion,coefficientTransmission]=calculCoefficients(theta,angleOfTransmission,wallDir,beta);
-                            emitterReflexPrime=reflexion(emetteur,beta,wallDir,refPoint,abs(coefficientReflexion));
+                            [refPoint,theta] = findReflexionPoint(emetteur,lastWall,rx_x,rx_y);
+                            [isTR,newTXX,newTXY,angleOfTransmission,newGTX,newPTX] = Snell_Descartes(lastWall,theta,refPoint(1),refPoint(2));
+                            [coefficientReflexion,coefficientTransmission]=calculCoefficients(theta,angleOfTransmission,lastWall,beta);
+                            emitterReflexPrime=reflexion(emetteur,beta,lastWall,refPoint,abs(coefficientReflexion));
                             emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
                             angleReflexList=[angleReflexList angleEmission];
                         end

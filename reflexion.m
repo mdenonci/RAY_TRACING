@@ -7,9 +7,12 @@ if (IMX>0)
         if(emetteur.reflex && emetteur.oldX==IMX && emetteur.oldY==IMY)
             emitterPrime=emitter(0,0,0,0,0,0);
         else
+            coefficient=emetteur.coefficients*coefficientReflexion;
             reflex=emetteur.reflex+1;
             trans=emetteur.transmis;
-            emitterPrime= emitter(IMX,IMY,emetteur.GTX,emetteur.PTX,reflex,trans);
+            emitterPrime= emitter(IMX,IMY,emetteur.GTX,emetteur.PTX,reflex,trans,coefficient);
+            emitterPrime.lastReflex=1;
+            emitterPrime.lastTransmis=0;
             emitterPrime.wallIntersectionX=interx;
             emitterPrime.wallIntersectionY=intery;
             emitterPrime.oldX=emetteur.x;
@@ -27,7 +30,6 @@ if (IMX>0)
             emitterPrime.y4=emetteur.y4;
             emitterPrime.CurrentAngleOfEmission=calculAngleReflexion(emetteur,refPoint,emetteur.CurrentAngleOfEmission,wall);
             emitterPrime.angleOfEmissionOriginal=emetteur.angleOfEmissionOriginal;
-            emitterPrime.coefficients=emetteur.coefficients*coefficientReflexion;
             if(emetteur.reflex+emetteur.transmis==0)
                 emitterPrime.x1=xRef;
                 emitterPrime.y1=yRef;
