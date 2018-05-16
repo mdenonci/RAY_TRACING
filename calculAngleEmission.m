@@ -1,4 +1,5 @@
 function angle=calculAngleEmission(emetteur,rx,ry)
+
 if(ry>emetteur.y)
     if(rx>emetteur.x)
         angle = atand(abs(emetteur.y-ry)/abs(emetteur.x-rx));

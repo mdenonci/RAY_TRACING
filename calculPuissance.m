@@ -17,15 +17,12 @@ for rx_x = Xi:1:Xs %Pour tout x
                     emetteur.CurrentAngleOfEmission=angleEmission;
                     emetteur.angleOfEmissionOriginal=angleEmission;
                     if(angleNotInTheList(angleEmission,angleReflexList))
-                        [refPoint,theta] = findReflexionPoint(emetteur,wallDir,rx_x,rx_y);
-                        [isTR,newTXX,newTXY,angleOfTransmission,newGTX,newPTX] = Snell_Descartes(wallDir,theta,refPoint(1),refPoint(2));
+                        [refPoint,theta,thetaABS] = findReflexionPoint(emetteur,wallDir,rx_x,rx_y);
+                        [isTR,newTXX,newTXY,angleOfTransmission,ret] = Snell_Descartes(wallDir,theta,thetaABS,refPoint(1),refPoint(2));
                         [coefficientReflexion,coefficientTransmission]=calculCoefficients(theta,angleOfTransmission,wallDir,beta);
                         emitterReflexPrime=reflexion(emetteur,beta,wallDir,refPoint,abs(coefficientReflexion));
                         emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
                         angleReflexList=[angleReflexList angleEmission];
-                    end
-                        
-                        
                     end
                     %% NOUVEL ALGORITHME POUR LES TRANSMISSIONS
                     % Il s'agit plus d'une amélioration du code d'hier au
@@ -35,31 +32,43 @@ for rx_x = Xi:1:Xs %Pour tout x
                     % position, calculer l'angle de réfraction et vérifier
                     % la condition de transmission. Ensuite on créé une
                     % antenne d'émission directionnelle.
-                    
-                    
-                    % TODO pour les transmissions:
-                    % >> Réflexions intra-murale
-                    % >> Implémenter la puissance d'émission des nouvelles
-                    %   antennes à partir de la distance et de l'épaisseur
-                    %   traversée
-                    % >> Corriger les problèmes potentiels d'angles
-                    % >> adapter la méthode A TOUS LES MURS
-                    
-%                     [reflexionPoint, theta_i] = findReflexionPoint(emetteur,wallDir,rx_x,rx_y);
-%                     [isTR,newTXX,newTXY,angleOfTransmission,newGTX,newPTX] = Snell_Descartes(wallDir,theta_i,reflexionPoint(1),reflexionPoint(2));
-%                     if(isTR==1)
-%                         emitterTransmPrime = emitter(newTXX,newTXY,10*newGTX,10*newPTX,false,emetteur.transmis+1);
-%                         emitterTransmPrime.reflex=0;
-%                         emitterTransmPrime.angleOfEmission = angleOfTransmission;
-%                         if emitterNotInTheList(emitterTransmPrime,emitterTransmPrimeList)
-%                             emitterTransmPrimeList = [emitterTransmPrimeList emitterTransmPrime];
-%                         end
-%                     end
+                    [reflexionPoint, theta_i,thetaABS] = findReflexionPoint(emetteur,wallDir,rx_x,rx_y);
+                    [isTR,newTXX,newTXY,angleOfTransmission,angleOfRetransmission] = Snell_Descartes(wallDir,theta_i,thetaABS,reflexionPoint(1),reflexionPoint(2));
+                    if(isTR==1)
+                        [coefficientReflexion,coefficientTransmission]=calculCoefficients(theta_i,angleOfTransmission,wallDir,beta);
+                        emitterTransmPrime = emitter(newTXX,newTXY,emetteur.GTX,emetteur.PTX,false,emetteur.transmis+1,coefficientTransmission);
+                        emitterTransmPrime.reflex=0;
+                        emitterTransmPrime.CurrentAngleOfEmission = angleOfRetransmission;
+                        emitterTransmPrime.wall = wallDir;
+                        if emitterNotInTheList(emitterTransmPrime,emitterTransmPrimeList)
+                            emitterTransmPrimeList = [emitterTransmPrimeList emitterTransmPrime];
+                        end
+                    end
+                end
+            end      
+            if(emetteur.transmis >= 1)
+                if(rx_x == 27 & rx_y == 37)
+                    disp('a');
+                end
+                wallsCrossed=wallOnTheRoad(emetteur,rx_x,rx_y,walls);
+                if(max(size(wallsCrossed))==0)
+                    power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
+                else
+                    wallDir=firstWallOnTheRoad(emetteur,wallsCrossed);
+                    angleEmission=emetteur.CurrentAngleOfEmission;
+                    [refPoint,theta,thetaABS] = findReflexionPoint(emetteur,wallDir,rx_x,rx_y);
+                    [isTR,newTXX,newTXY,angleOfTransmission,angleOfRetransmission] = Snell_Descartes(wallDir,theta,thetaABS,refPoint(1),refPoint(2));
+                    [coefficientReflexion,coefficientTransmission]=calculCoefficients(theta,angleOfTransmission,wallDir,beta);
+                    refOK = checkEmitterPositionForReflexion(emetteur,wallDir);
+                    if (refOK == 1)
+                        emitterReflexPrime=reflexion(emetteur,beta,wallDir,refPoint,abs(coefficientReflexion));
+                        emitterReflexPrimeList=[emitterReflexPrimeList emitterReflexPrime];
+                        angleReflexList=[angleReflexList angleEmission];
+                    end
+                end
             end
+        end
             if(emetteur.lastReflex==1)
-                if(rx_x == 35 & rx_y == 33)
-                    disp('DEB');
-    end
                 wallsCrossed=wallOnTheRoad(emetteur,rx_x,rx_y,walls);
                 numberOfCrossedWalls=max(size(wallsCrossed));
                 
@@ -74,7 +83,7 @@ for rx_x = Xi:1:Xs %Pour tout x
                     emetteur.CurrentAngleOfEmission=angleEmission;
                         if(angleNotInTheList(angleEmission,angleReflexList))
                             [refPoint,theta] = findReflexionPoint(emetteur,lastWall,rx_x,rx_y);
-                            [isTR,newTXX,newTXY,angleOfTransmission,newGTX,newPTX] = Snell_Descartes(lastWall,theta,refPoint(1),refPoint(2));
+                            [isTR,newTXX,newTXY,angleOfTransmission,angleOfRetransmission] = Snell_Descartes(lastWall,theta,refPoint(1),refPoint(2));
                             [coefficientReflexion,coefficientTransmission]=calculCoefficients(theta,angleOfTransmission,lastWall,beta);
                             refOK = checkEmitterPositionForReflexion(emetteur,lastWall);
                             if (refOK == 1)
@@ -88,7 +97,6 @@ for rx_x = Xi:1:Xs %Pour tout x
                     end
                 end
             end
-        end
         end
     end
 end

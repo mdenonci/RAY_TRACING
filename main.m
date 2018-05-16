@@ -10,8 +10,8 @@ close all;
 
 % Dimensions de l'espace
 
-X = 60;
-Y = 60;
+X = 20;
+Y = 20;
 
 % Positions du nouveau carré shifté afin d'avoir une marge
 Xinf = X;
@@ -46,16 +46,16 @@ power_matrix = zeros(Y,X);
 
 % Définition des murs externes
 
-dwall = wall('h',0,0,X,0,true,0);
-uwall = wall('h',0,Y,X,0,true,0);
-rwall = wall('v',X,Y,Y,0,true,0);
-lwall = wall('v',0,Y,Y,0,true,0);
-% 
-walls = [walls dwall uwall rwall lwall];
+% dwall = wall('h',0,0,X,0,true,0);
+% uwall = wall('h',0,Y,X,0,true,0);
+% rwall = wall('v',X,Y,Y,0,true,0);
+% lwall = wall('v',0,Y,Y,0,true,0);
+% % 
+% walls = [walls dwall uwall rwall lwall];
 
 % Émetteur(s)
 
-e1 = emitter(12,10,10,10,0,0,1);
+e1 = emitter(5,2,10,10,0,0,1);
 emitters = [emitters e1];
 
 % Construction de l'espace (Murs, ...)
@@ -65,11 +65,11 @@ emitters = [emitters e1];
 % beton=1
 % cloison=2
 
-wal = wall('v',50,50,10,2,true,0);
+wal = wall('h',2,15,8,2,true,0);
 walls = [walls wal];
 
-% wal4 = wall('v',2,15,7,2,true,0);
-% walls=[walls wal4];
+wal4 = wall('v',15,15,7,2,true,0);
+walls=[walls wal4];
 % 
 % wal2 = wall('h',11,16,4,0,true,0);
 % walls=[walls wal2];
@@ -96,10 +96,10 @@ e1 = emitters(1);
 [power_matrix,emitterSecondList,trSecondList]=calculPuissance(e1,power_matrix,X,Y,Xinf,Xsup,Yinf,Ysup,beta,walls);
 % % Calcul Puissance Ondes reflechies 1fois + création de listes des éméteurs de deuxieme réflexion
 emitterThirdListList=[];
-for emitterSecond = [emitterSecondList]
-   %plot(emitterSecond.x,emitterSecond.y,'d','Markersize',10);
+for emitterSecond = [emitterSecondList trSecondList]
    [power_matrix, emitterThirdList,trThirdList]=calculPuissance(emitterSecond,power_matrix,X,Y,Xinf,Xsup,Yinf,Ysup,beta,walls);
    emitterThirdListList=[emitterThirdListList emitterThirdList];
+   emitterThirdListList=[emitterThirdListList trThirdList];
 end
 % % 
 % % % Calcul Puissance Ondes reflechies 2fois + création de listes des éméteurs de troisieme réflexion
@@ -108,6 +108,7 @@ emitterFourthListList=[];
 for emitterThird = [emitterThirdListList]
     [power_matrix, emitterFourthList,trFourthList]=calculPuissance(emitterThird,power_matrix,X,Y,Xinf,Xsup,Yinf,Ysup,beta,walls);
     emitterFourthListList=[emitterFourthListList emitterFourthList];
+    emitterFourthListList=[emitterFourthListList trFourthList];
 end
 
 
@@ -424,6 +425,7 @@ for tx = emitters
     plot(tx.x+0.5,tx.y+0.5,'O','MarkerSize', 15,'MarkerFaceColor','white','Color','black');
     hold on;
 end
+
 
 for wl = walls
     if (wl.type == 'v')

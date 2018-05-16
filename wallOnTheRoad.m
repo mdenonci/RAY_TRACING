@@ -14,12 +14,12 @@ for w = walls
             xw=w.xl;
         end
         yBegin=w.yd;
-        yEnd=w.yu-1;
+        yEnd=w.yu;
         if(xmin <= xw && xw <= xmax)
             if (TX_Y >= w.yu)
                 yCorr=floor((vectDir*xw)+b);
             elseif (TX_Y <= w.yd)
-                yCorr=ceil((vectDir*xw)+b);
+                yCorr=round((vectDir*xw)+b);
             else
                 yCorr=round((vectDir*xw)+b);
             end
@@ -48,6 +48,8 @@ for w = walls
             yw=w.yu;
         elseif(TX_Y >= w.yu)
             yw=w.yd;
+        else
+            yw = 0; %Cause une erreur systématique de la condition
         end
         xBegin=w.xl;
         xEnd=w.xr-1;

@@ -13,7 +13,6 @@ classdef emitter
         wall;
         angleOfEmissionOriginal;
         CurrentAngleOfEmission;
-        angleOfEmission;
         coefficients;
         lastReflex;
         lastTransmis;
@@ -49,7 +48,6 @@ classdef emitter
             obj.wall;
             obj.angleOfEmissionOriginal;
             obj.CurrentAngleOfEmission;
-            obj.angleOfEmission;
             obj.coefficients=coefficients;
             obj.lastReflex=0;
             obj.lastTransmis=0;

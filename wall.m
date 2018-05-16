@@ -32,7 +32,7 @@ classdef wall
                 obj.yd = yu-l;
             elseif (type == 'h')
                 obj.xr = xl+l;
-                obj.yd = yu+e;
+                obj.yd = yu-e;
             end
             if(materiaux == 0)
                 obj.permRel=4.6;
