@@ -1,5 +1,5 @@
 function power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta)
-if (emetteur.lastReflex && pointIsAligned(emetteur,rx_x,rx_y,30))
+if (emetteur.lastReflex && pointIsAligned(emetteur,rx_x,rx_y,1))
     if( verificationPositionAntennaPrime(emetteur,rx_x,rx_y) && verificationPositionWall(emetteur,rx_x,rx_y))
         interx=emetteur.wallIntersectionX;
         intery=emetteur.wallIntersectionY;

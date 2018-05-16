@@ -28,11 +28,11 @@ classdef wall
             obj.reflex=reflex;
             obj.materiaux = materiaux;
             if (type == 'v')
-                obj.xr = xl;
+                obj.xr = xl+e;
                 obj.yd = yu-l;
             elseif (type == 'h')
                 obj.xr = xl+l;
-                obj.yd = yu;
+                obj.yd = yu+e;
             end
             if(materiaux == 0)
                 obj.permRel=4.6;
