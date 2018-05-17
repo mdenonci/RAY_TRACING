@@ -75,7 +75,7 @@ for rx_x = Xi:1:Xs %Pour tout x
                             [refPoint,theta] = findReflexionPoint(emetteur,lastWall,rx_x,rx_y);
                             xRef=refPoint(1);
                             yRef=refPoint(2);
-                            [isTR,newTXX,newTXY,angleOfTransmission,angleOfRetransmission] = Snell_Descartes(lastWall,theta,refPoint(1),refPoint(2));
+                            [isTR,newTXX,newTXY,angleOfTransmission] = Snell_Descartes(lastWall,theta,refPoint(1),refPoint(2));
                             [coefficientReflexion,coefficientTransmission]=calculCoefficients(theta,angleOfTransmission,lastWall,beta);
                             refOK = checkEmitterPositionForReflexion(emetteur,lastWall);
                             if (refOK == 1)
@@ -88,7 +88,7 @@ for rx_x = Xi:1:Xs %Pour tout x
                                 emitterTransmPrime = emitter(newTXX,newTXY,emetteur.GTX,emetteur.PTX,false,emetteur.transmis+1,coefficientTransmission);
                                 emitterTransmPrime.lastReflex=0;
                                 emitterTransPrime.dist=emetteur.dist+d;
-                                emitterTransmPrime.CurrentAngleOfEmission = angleOfRetransmission;
+                                emitterTransmPrime.CurrentAngleOfEmission = angleOfTransmission;
                                 emitterTransmPrime.wall = lastWall;
                                 emitterTransmPrime.lastTransmis=1;
                                 emitterReflexPrimeList=[emitterReflexPrimeList emitterTransmPrime];

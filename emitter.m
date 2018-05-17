@@ -24,6 +24,7 @@ classdef emitter
         y2;
         y3;
         y4;
+        dist;
     end
     methods
         function obj = emitter(x,y,GTX,PTX,reflex,transmis,coefficients)
@@ -47,10 +48,11 @@ classdef emitter
             obj.wallIntersectionY=-1;
             obj.wall;
             obj.angleOfEmissionOriginal;
-            obj.CurrentAngleOfEmission;
+            obj.CurrentAngleOfEmission=0;
             obj.coefficients=coefficients;
             obj.lastReflex=0;
             obj.lastTransmis=0;
+            obj.dist=0;
         end
     end
 end

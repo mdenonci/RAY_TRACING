@@ -1,4 +1,4 @@
-function [coefficientReflexion,coefficientTransmission]=calculCoefficients(angleIncident,angleTrans,wall,beta)
+function [coefficientReflexion,coefficientTransmission]=calculCoefficients(angleIncident,angleTrans,wall,beta,angleOfRetransmission)
 frequency = 245e+07;
 w = 2*pi*frequency;
 B=beta;

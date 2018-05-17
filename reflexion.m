@@ -22,6 +22,7 @@ function emitterPrime= reflexion(emetteur,beta,wall,refPoint,coefficientReflexio
                 emitterPrime.reflex=emetteur.reflex+1;
                 emitterPrime.wall=wall;
                 emitterPrime.transmis=emetteur.transmis;
+                emitterPrime.lastTransmis=0;
                 emitterPrime.x1=emetteur.x1;
                 emitterPrime.y1=emetteur.y1;
                 emitterPrime.x2=emetteur.x2;
@@ -39,6 +40,7 @@ function emitterPrime= reflexion(emetteur,beta,wall,refPoint,coefficientReflexio
                 if(emetteur.reflex+emetteur.transmis==1)
                     emitterPrime.x2=xRef;
                     emitterPrime.y2=yRef;
+                    
                 end
                 if(emetteur.reflex+emetteur.transmis==2)
                     emitterPrime.x3=xRef;
