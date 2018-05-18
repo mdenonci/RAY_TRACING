@@ -71,10 +71,10 @@ for rx_x = Xi:1:Xs %Pour tout x
                     angleEmission=calculAngleEmission(emetteur,rx_x,rx_y);
                     emetteur.CurrentAngleOfEmission=angleEmission;
                         if(angleNotInTheList(angleEmission,angleReflexList))
-                            [refPoint,theta] = findReflexionPoint(emetteur,lastWall,rx_x,rx_y);
+                            [refPoint,theta,thetaABS] = findReflexionPoint(emetteur,lastWall,rx_x,rx_y);
                             xRef=refPoint(1);
                             yRef=refPoint(2);
-                            [isTR,newTXX,newTXY,angleOfTransmission,angleOfRetransmission] = Snell_Descartes(lastWall,theta,refPoint(1),refPoint(2));
+                            [isTR,newTXX,newTXY,angleOfTransmission,angleOfRetransmission] = Snell_Descartes(lastWall,theta,thetaABS,refPoint(1),refPoint(2));
                             [coefficientReflexion,coefficientTransmission]=calculCoefficients(theta,angleOfTransmission,lastWall,beta);
                             refOK = checkEmitterPositionForReflexion(emetteur,lastWall);
                             if (refOK == 1)
