@@ -84,7 +84,7 @@ for rx_x = Xi:1:Xs %Pour tout x
                             end
                             if(isTR==1)
                                 d=sqrt((xRef-emetteur.x)^2 + (yRef-emetteur.y)^2);
-                                emitterTransmPrime = emitter(newTXX,newTXY,emetteur.GTX,emetteur.PTX,false,emetteur.transmis+1,emetteur.coefficients*coefficientTransmission);
+                                emitterTransmPrime = emitter(newTXX,newTXY,emetteur.GTX,emetteur.PTX,false,emetteur.transmis+1,emitter.coefficients*coefficientTransmission);
                                 emitterTransmPrime.lastReflex=0;
                                 emitterTransPrime.dist=emetteur.dist+d;
                                 emitterTransmPrime.CurrentAngleOfEmission = angleOfRetransmission;

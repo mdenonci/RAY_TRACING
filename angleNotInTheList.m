@@ -1,7 +1,7 @@
 function boolean= angleNotInTheList(angle,angleList)
 boolean=true;
 for a=angleList
-    if(angle==a)
+    if(round(angle)==round(a))
         boolean=false;
     end
 end

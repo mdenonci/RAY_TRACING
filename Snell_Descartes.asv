@@ -13,7 +13,7 @@ if (entryPointX <= wall.xr & entryPointX >= wall.xl & entryPointY >= wall.yd & e
 
     eps0 = (1/(36*pi))*10^(-9);
 
-    n_wall = sqrt(wall.permRel);%CALCUL DE L'INDICE DE REFRACTION A AJOUTER AU MUR
+    n_wall = sqrt(wall.permRel*eps0);%CALCUL DE L'INDICE DE REFRACTION A AJOUTER AU MUR
 
     if (wall.type == 'v')
         if (wall.xr >= entryPointX) %Si le rayon arrive par la gauche
@@ -21,7 +21,7 @@ if (entryPointX <= wall.xr & entryPointX >= wall.xl & entryPointY >= wall.yd & e
                 theta_tCORR = asind(sind(theta_i)/n_wall);
                 theta_t = theta_tCORR;
                 DELTA_Y = tand(theta_t)*(wall.e);
-            elseif (thetaABS > 270 & thetaABS < 360)
+            elseif (thetaABS > 270 & thetaABS <= 360)
                 theta_tCORR = asind(sind(theta_i)/n_wall);
                 theta_t = 360-theta_tCORR;
                 DELTA_Y = tand(theta_t)*(wall.e);

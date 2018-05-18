@@ -18,10 +18,10 @@ if (wall.type == 'v')
     elseif (emitter.x <= wall.xl)
         xRefPoint = wall.xl;
         theta = atand(abs(emitter.y-ry)/abs(emitter.x-rx));
-        if (emitter.y >= ry)
+        if (emitter.y > ry)
             yRefPoint = -(tand(theta)*(abs(emitter.x-xRefPoint)))+emitter.y;
             thetaABS = 360-theta;
-        elseif (emitter.y < ry)
+        elseif (emitter.y <= ry)
             yRefPoint = (tand(theta)*(abs(emitter.x-xRefPoint)))+emitter.y;
             thetaABS = theta;
         end

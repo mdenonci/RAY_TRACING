@@ -10,8 +10,8 @@ close all;
 
 % Dimensions de l'espace
 
-X = 20;
-Y = 20;
+X = 30;
+Y = 30;
 
 % Positions du nouveau carré shifté afin d'avoir une marge
 Xinf = X;
@@ -55,7 +55,7 @@ power_matrix = zeros(Y,X);
 
 % Émetteur(s)
 
-e1 = emitter(5,2,10,10,0,0,1);
+e1 = emitter(15,15,1,0.1,0,0,1);
 emitters = [emitters e1];
 
 % Construction de l'espace (Murs, ...)
@@ -64,9 +64,9 @@ emitters = [emitters e1];
 % brique=0
 % beton=1
 % cloison=2
-
-% wal = wall('h',2,15,8,2,true,0);
-% walls = [walls wal];
+% 
+wal = wall('v',20,20,10,2,true,0);
+walls = [walls wal];
 % 
 % wal4 = wall('v',15,15,7,2,true,0);
 % walls=[walls wal4];
@@ -407,13 +407,13 @@ map = [0,0,128;
 255,61,2;
 255,59,1]/255;
 
-%power_matrix = [[power_matrix zeros(size(power_matrix,1),1)] ; zeros(1,size(power_matrix,2)+1)];
+power_matrix = [[power_matrix zeros(size(power_matrix,1),1)] ; zeros(1,size(power_matrix,2)+1)];
 colormap(map);
 fig = pcolor(power_matrix);
 set(fig,'EdgeColor', 'none');
 colorbar;
 grid off;
-%caxis([0 4]);
+%caxis([0 0.04]);
 
 hold on;
 
