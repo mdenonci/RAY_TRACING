@@ -68,17 +68,17 @@ emitters = [emitters e1];
 % beton=1
 % cloison=2
 % 
-wal = wall('v',7,5,5,0.5,true,2);
-walls = [walls wal];
-
-wal4 = wall('v',7,30,10,0.5,true,1);
-walls=[walls wal4];
- 
-wal2 = wall('h',20,15,15,0.5,true,0);
-walls=[walls wal2];
-
-wal3 = wall('v',20,30,10,0.5,true,0);
-walls=[walls wal3];
+%wal = wall('v',30,25,10,0.5,true,2);
+%walls = [walls wal];
+% 
+% wal4 = wall('v',15,15,7,2,true,0);
+% walls=[walls wal4];
+% 
+% wal2 = wall('h',11,16,4,0,true,0);
+% walls=[walls wal2];
+% 
+% wal3 = wall('h',11,13,4,0,true,0);
+% walls=[walls wal3];
 
 
 

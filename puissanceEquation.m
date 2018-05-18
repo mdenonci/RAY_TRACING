@@ -8,10 +8,5 @@ Ra=73;
 coefficient=emetteur.coefficients;
 E=coefficient*sqrt(60*emetteur.GTX*emetteur.PTX)*(exp(-j*beta*dtotal))/dtotal;
 hauteurEqui=calculHauteurEquivalente(lambda,emetteur.CurrentAngleOfEmission);
-Puissance=(1/(8*Ra))*(abs(E*hauteurEqui))^2;
-if (Puissance == NaN)
-    disp('a');
-end
-PuissanceDB = 10*log10(Puissance/0.001);
-power_matrix(rx_y,rx_x) = power_matrix(rx_y,rx_x)+PuissanceDB;
+power_matrix(rx_y,rx_x) = power_matrix(rx_y,rx_x)+(hauteurEqui*E);
 end

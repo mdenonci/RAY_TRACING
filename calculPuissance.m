@@ -29,8 +29,8 @@ for rx_x = Xi:1:Xs %Pour tout x
                             d=sqrt((xRef-emetteur.x)^2 + (yRef-emetteur.y)^2);
                             emitterTransmPrime = emitter(newTXX,newTXY,emetteur.GTX,emetteur.PTX,false,emetteur.transmis+1,emetteur.coefficients*coefficientTransmission);
                             emitterTransmPrime.lastReflex=0;
-                            emitterTransPrime.dist=emetteur.dist+d;
-                            emitterTransmPrime.CurrentAngleOfEmission = angleOfRetransmission;
+                            emitterTransmPrime.dist=emetteur.dist+d;
+                            emitterTransmPrime.CurrentAngleOfEmission = angleOfRetransmission
                             emitterTransmPrime.wall = wallDir;
                             emitterTransmPrime.lastTransmis=1;
                             emitterPrimeList=[emitterPrimeList emitterTransmPrime];
@@ -41,7 +41,7 @@ for rx_x = Xi:1:Xs %Pour tout x
             if(emetteur.lastTransmis == 1)
                 wallsCrossed=wallOnTheRoad(emetteur,rx_x,rx_y,walls);
                 if(max(size(wallsCrossed))==0)
-                    power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
+                    %power_matrix=ondeDirecte(emetteur,rx_x,rx_y,power_matrix,beta);
                 else
 
                     wallDir=firstWallOnTheRoad(emetteur,wallsCrossed);

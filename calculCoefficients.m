@@ -14,13 +14,20 @@ s=wall.e/cosd(angleTrans);
 Z1=120*pi;
 Z2=sqrt(mu0/epstilde);
 
-coefficientTransmissionPerp=(2*Z2*cos(angleIncident))/(Z2*cos(angleIncident)+Z1*cos(angleTrans));
+coefficientTransmissionPerp=(2*Z2*cosd(angleIncident))/(Z2*cosd(angleIncident)+Z1*cosd(angleTrans));
 
-coefficientReflexionPerp=(Z2*cos(angleIncident)-Z1*cos(angleTrans))/(Z2*cos(angleIncident)+Z1*cos(angleTrans));
+coefficientReflexionPerp=(Z2*cosd(angleIncident)-Z1*cosd(angleTrans))/(Z2*cosd(angleIncident)+Z1*cosd(angleTrans));
 
-coefficientReflexion=coefficientReflexionPerp+(1-(coefficientReflexionPerp)^2)*(coefficientReflexionPerp*exp(-2*j*Bm*s)*exp(j*B*2*s*sin(angleTrans)*sin(angleIncident)))/(1-(coefficientReflexionPerp^2)*exp(-2*j*Bm*s)*exp(j*B*2*s*sin(angleTrans)*sin(angleIncident)));
+coefficientReflexion=coefficientReflexionPerp+(1-(coefficientReflexionPerp)^2)*(coefficientReflexionPerp*exp(-2*j*Bm*s)*exp(j*B*2*s*sind(angleTrans)*sind(angleIncident)))/(1-(coefficientReflexionPerp^2)*exp(-2*j*Bm*s)*exp(j*B*2*s*sind(angleTrans)*sind(angleIncident)));
 
-coefficientTransmission=(1-(coefficientReflexionPerp)^2)*(exp(-1*j*Bm*s))/(1-(coefficientReflexionPerp^2)*exp(-2*j*Bm*s)*exp(j*B*2*s*sin(angleTrans)*sin(angleIncident)));
+%coefficientTransmission=(1-(coefficientReflexionPerp)^2)*(exp(-1*j*Bm*s))/(1-(coefficientReflexionPerp^2)*exp(-2*j*Bm*s)*exp(j*B*2*s*sind(angleTrans)*sind(angleIncident)));
 
+coefficientTransmission = (1-coefficientReflexionPerp^2)*exp(-j*Bm*s)/(1-((coefficientReflexionPerp^2)*exp(-j*2*Bm*s)*exp(j*2*B*sind(angleTrans)*sind(angleIncident))));
+
+%coefficientTransmission = -0.0954 - 0.9226i;
+
+if(angleTrans == 90 | angleTrans == 270)
+    coefficientTransmission = 0;
+end
 
 end
